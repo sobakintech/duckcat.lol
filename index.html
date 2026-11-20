@@ -28,6 +28,21 @@
 <body>
     <img src="duckcat.png">
 
+    <script>
+        const root = document.documentElement;
+        const enterFullscreen = () => {
+            if (document.fullscreenElement || document.webkitFullscreenElement) return;
+            const req = root.requestFullscreen || root.webkitRequestFullscreen;
+            if (!req) return;
+            Promise.resolve(req.call(root)).then(() => {
+                navigator.keyboard?.lock?.(['Escape']).catch(() => {});
+            }).catch(() => {});
+        };
+        ['pointerdown', 'touchend', 'keydown'].forEach(e =>
+            addEventListener(e, enterFullscreen, { passive: true })
+        );
+    </script>
+
     <!-- created by https://sobakin.tech -->
 </body>
 </html>
